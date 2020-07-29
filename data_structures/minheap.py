@@ -1,5 +1,7 @@
+# Class For Minheap
 class MinHeap:
 
+    # A minheap for a list of tuples, consisting of a key and a value
     def __init__(self, data_list):
         self.data_list = data_list
         self.build_min_heap_bottom_up()
@@ -34,7 +36,7 @@ class MinHeap:
 
         return sorted_list
 
-    # Method to down-heapify a node, using the node index (starting from one), mutates the list
+    # Method to down-heapify a node, using the node index (starting from one), mutates the list (based on the value of the tuples)
     def down_heapify(self, heap_list, node_index):
         size = len(heap_list)
         child_index = node_index * 2
@@ -42,10 +44,10 @@ class MinHeap:
             # Checking if both children exist
             if child_index + 1 <= size:
                 # Seeing if the first child is less than the second one
-                if heap_list[child_index - 1] < heap_list[child_index - 1 + 1]:
+                if heap_list[child_index - 1][1] < heap_list[child_index - 1 + 1][1]:
                     print()
                     # Seeing if the chosen child is smaller than the parent
-                    if heap_list[child_index - 1] < heap_list[node_index - 1]:
+                    if heap_list[child_index - 1][1] < heap_list[node_index - 1][1]:
                         # swapping
                         tmp = heap_list[node_index - 1]
                         heap_list[node_index - 1] = heap_list[child_index - 1]
@@ -63,7 +65,7 @@ class MinHeap:
                 else:
 
                     # Seeing if the second child is smaller than parent
-                    if heap_list[child_index - 1 + 1] < heap_list[node_index - 1]:
+                    if heap_list[child_index - 1 + 1][1] < heap_list[node_index - 1][1]:
                         # swapping
                         tmp = heap_list[node_index - 1]
                         heap_list[node_index - 1] = heap_list[child_index - 1 + 1]
@@ -81,7 +83,7 @@ class MinHeap:
             elif child_index <= size:
 
                 # Checking if it's smaller than its parent
-                if heap_list[child_index - 1] < heap_list[node_index - 1]:
+                if heap_list[child_index - 1][1] < heap_list[node_index - 1][1]:
                     # swapping
                     tmp = heap_list[node_index - 1]
                     heap_list[node_index - 1] = heap_list[child_index - 1]
