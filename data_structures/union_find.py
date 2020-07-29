@@ -16,14 +16,14 @@ class UnionFind:
 
         return self.parent[x]
 
-    # Union Two Sets
+    # Union Two Sets, returns 0 if they were in the same set, returns 1 otherwise
     def union(self, x, y):
         x_parent = self.find(x)
         y_parent = self.find(y)
 
         # Checking if they're in the same set
         if x_parent == y_parent:
-            return
+            return 0
 
         # Not in the Same Set, with different size scenarios
         if self.sets[x_parent].size < self.sets[y_parent].size:
@@ -33,6 +33,8 @@ class UnionFind:
         else:
             self.parent[y_parent] = x_parent
             self.sets[x_parent].size += 1
+
+        return 1
 
 
 # Class for a Set

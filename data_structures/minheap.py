@@ -45,7 +45,6 @@ class MinHeap:
             if child_index + 1 <= size:
                 # Seeing if the first child is less than the second one
                 if heap_list[child_index - 1][1] < heap_list[child_index - 1 + 1][1]:
-                    print()
                     # Seeing if the chosen child is smaller than the parent
                     if heap_list[child_index - 1][1] < heap_list[node_index - 1][1]:
                         # swapping

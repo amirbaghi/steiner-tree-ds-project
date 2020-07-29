@@ -2,6 +2,7 @@ from data_structures.graph import Graph
 from data_structures.minheap import MinHeap
 from data_structures.union_find import UnionFind
 from file_handling.file_handler import FileHandler
+from kruskal import Kruskal
 
 
 def test_minheap_down_heapify():
@@ -24,7 +25,10 @@ def test_union_find():
 
 
 def test_graph():
-    graph = Graph(4, 4, {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]}, [1, 4])
+    terminals = [1, 4]
+    nodes = [1, 2, 3, 4]
+    graph = Graph(4, 4, {k: 1 if k in terminals else 0 for k in nodes},
+                  {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]})
     print(graph.nodes)
     print(graph.edges)
     print(graph.sort_edges())
@@ -38,7 +42,31 @@ def read_file_test():
     print(terminals)
 
 
+def test_file_data_to_graph():
+    comment, graph, terminals = FileHandler.read_stp_file(
+        "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs/bip42p.stp")
+    terminal_nodes = [terminals[k] for k in range(1, terminals['Terminals'] + 1)]
+    graph = Graph(graph['Nodes'], graph['Edges'],
+                  {k: 1 if k in terminal_nodes else 0 for k in range(1, graph['Nodes'] + 1)},
+                  {k: graph[k] for k in range(1, graph['Edges'] + 1)}
+                  )
+    print(graph.nodes)
+    print(graph.edges)
+    print(graph.sort_edges())
+
+
+def test_kruskal():
+    terminals = [1, 4]
+    nodes = [1, 2, 3, 4]
+    graph = Graph(4, 4, {k: 1 if k in terminals else 0 for k in nodes},
+                  {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]})
+    mst = Kruskal.kruskal_algorithm(graph)
+    return mst
+
+
 # test_minheap_down_heapify()
 # test_union_find()
 # read_file_test()
 # test_graph()
+# test_file_data_to_graph()
+test_kruskal()
