@@ -56,10 +56,25 @@ def test_file_data_to_graph():
 
 
 def test_kruskal():
-    terminals = [1, 4]
-    nodes = [1, 2, 3, 4]
-    graph = Graph(4, 4, {k: 1 if k in terminals else 0 for k in nodes},
-                  {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]})
+    terminals = [2, 5, 7]
+    nodes = [i for i in range(1, 8)]
+    graph = Graph(7, 9, {k: 1 if k in terminals else 0 for k in nodes},
+                  {1: [1, 2, 28], 2: [2, 3, 16], 3: [3, 4, 12], 4: [4, 5, 22], 5: [5, 6, 25], 6: [6, 1, 10],
+                   7: [2, 7, 14],
+                   8: [7, 5, 24], 9: [7, 4, 18]})
+    print(graph.sort_edges())
+    mst = Kruskal.kruskal_algorithm(graph)
+    return mst
+
+
+def test_kruskal_on_stp_file():
+    comment, graph, terminals = FileHandler.read_stp_file(
+        "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs/bip42p.stp")
+    terminal_nodes = [terminals[k] for k in range(1, terminals['Terminals'] + 1)]
+    graph = Graph(graph['Nodes'], graph['Edges'],
+                  {k: 1 if k in terminal_nodes else 0 for k in range(1, graph['Nodes'] + 1)},
+                  {k: graph[k] for k in range(1, graph['Edges'] + 1)}
+                  )
     mst = Kruskal.kruskal_algorithm(graph)
     return mst
 
@@ -70,3 +85,4 @@ def test_kruskal():
 # test_graph()
 # test_file_data_to_graph()
 test_kruskal()
+# test_kruskal_on_stp_file()
