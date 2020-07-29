@@ -20,15 +20,13 @@ class Kruskal:
             result = union_find.union(first_node - 1, second_node - 1)
             # The nodes were in different sets and union was successful, update the graph
             if result == 1:
-                # Adding the nodes to the MST
-                mst_nodes[first_node] = graph.nodes[first_node]
-                mst_nodes[second_node] = graph.nodes[second_node]
+                # Adding the nodes to the MST, also setting their terminal status
+                mst_nodes[first_node] = graph.nodes[first_node][1]
+                mst_nodes[second_node] = graph.nodes[second_node][1]
 
                 # Adding the edge to the MST
                 mst_edges[edge_number] = [first_node, second_node, weight]
                 edge_number += 1
-        print(mst_nodes)
-        print(mst_edges)
+
         minimum_spanning_tree = Graph(len(mst_nodes), len(mst_edges), mst_nodes, mst_edges)
-        print(minimum_spanning_tree.graph_weight())
         return minimum_spanning_tree, minimum_spanning_tree.graph_weight()

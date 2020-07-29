@@ -2,7 +2,7 @@ from data_structures.graph import Graph
 from data_structures.minheap import MinHeap
 from data_structures.union_find import UnionFind
 from file_handling.file_handler import FileHandler
-from kruskal import Kruskal
+from kruskal.kruskal import Kruskal
 
 
 def test_minheap_down_heapify():
@@ -27,6 +27,7 @@ def test_union_find():
 def test_graph():
     terminals = [1, 4]
     nodes = [1, 2, 3, 4]
+    edges = {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]}
     graph = Graph(4, 4, {k: 1 if k in terminals else 0 for k in nodes},
                   {1: [1, 3, 2], 2: [3, 2, 4], 3: [1, 4, 1], 4: [2, 4, 5]})
     print(graph.nodes)
@@ -62,8 +63,9 @@ def test_kruskal():
                   {1: [1, 2, 28], 2: [2, 3, 16], 3: [3, 4, 12], 4: [4, 5, 22], 5: [5, 6, 25], 6: [6, 1, 10],
                    7: [2, 7, 14],
                    8: [7, 5, 24], 9: [7, 4, 18]})
-    print(graph.sort_edges())
     mst = Kruskal.kruskal_algorithm(graph)
+    print(mst[0].find_non_terminal_leaves())
+    print(mst[1])
     return mst
 
 
@@ -76,6 +78,8 @@ def test_kruskal_on_stp_file():
                   {k: graph[k] for k in range(1, graph['Edges'] + 1)}
                   )
     mst = Kruskal.kruskal_algorithm(graph)
+    print(mst[0].find_non_terminal_leaves())
+    print(mst[1])
     return mst
 
 
@@ -84,5 +88,5 @@ def test_kruskal_on_stp_file():
 # read_file_test()
 # test_graph()
 # test_file_data_to_graph()
-test_kruskal()
-# test_kruskal_on_stp_file()
+# test_kruskal()
+test_kruskal_on_stp_file()
