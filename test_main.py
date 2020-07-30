@@ -77,7 +77,6 @@ def test_kruskal():
                    7: [2, 7, 14],
                    8: [7, 5, 24], 9: [7, 4, 18]})
     mst = Kruskal.kruskal_algorithm(graph)
-    # print(mst[0].nodes)
     print(mst[0].find_non_terminal_leaves())
     print(mst[1])
     return mst
@@ -126,9 +125,7 @@ def test_steiner_tree_algorithm_on_stp_file(path):
                   {k: graph[k] for k in range(1, graph['Edges'] + 1)}
                   )
     mst = Kruskal.kruskal_algorithm(graph)
-    # print("Kruskal Weight: ", mst[1])
     steiner_tree = SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
-    # print("Steiner Weight: ", steiner_tree[1])
     return steiner_tree[0], steiner_tree[1]
 
 
@@ -147,6 +144,7 @@ def test_writing_output():
     FileHandler.write_output("bip42p", steiner_tree[1], steiner_tree[0].edges)
 
 
+# The final test method to write out the output to each input in the data-set
 def test_writing_output_for_all_inputs():
     path = "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs"
     files = [join(path, f) for f in listdir(path) if isfile(join(path, f))]

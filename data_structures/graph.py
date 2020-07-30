@@ -22,7 +22,6 @@ class Graph:
         # A dictionary with keys being the node number and the values being a list including the node degree (index 0),
         # the edges (index 1), and 1 if it's terminal or 0 if it's not (index 2)
         self.nodes = {k: [node_degrees[k][0], node_degrees[k][1], nodes[k]] for k in list(nodes.keys())}
-        # self.nodes = {k: 1 if k in terminals else 0 for k in nodes}
 
     # Sorting edges using Heap-Sort, returns a list consisting of a key (edge index) and value (its weight)
     def sort_edges(self):
