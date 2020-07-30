@@ -1,3 +1,6 @@
+from os import listdir
+from os.path import isfile, join
+
 from data_structures.graph import Graph
 from data_structures.minheap import MinHeap
 from data_structures.union_find import UnionFind
@@ -98,15 +101,42 @@ def test_kruskal_on_stp_file():
 
 
 def test_steiner_tree_algorithm():
-    terminals = [2, 5, 7]
-    nodes = [i for i in range(1, 8)]
-    graph = Graph(7, 9, {k: 1 if k in terminals else 0 for k in nodes},
-                  {1: [1, 2, 28], 2: [2, 3, 16], 3: [3, 4, 12], 4: [4, 5, 22], 5: [5, 6, 25], 6: [6, 1, 10],
-                   7: [2, 7, 14],
-                   8: [7, 5, 24], 9: [7, 4, 18]})
+    terminals = [1, 2, 3]
+    nodes = [i for i in range(1, 5)]
+    graph_nodes = {k: 0 for k in nodes}
+    for terminal in terminals:
+        graph_nodes[terminal] = 1
+    graph = Graph(4, 6, graph_nodes,
+                  {1: [1, 2, 19], 2: [2, 3, 19], 3: [3, 1, 19], 4: [1, 4, 10], 5: [2, 4, 10], 6: [3, 4, 10]})
     mst = Kruskal.kruskal_algorithm(graph)
     print(mst[1])
     SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
+
+
+def test_steiner_tree_algorithm_on_stp_file(path):
+    comment, graph, terminals = FileHandler.read_stp_file(
+        path)
+    graph_nodes = {k: 0 for k in range(1, graph['Nodes'] + 1)}
+    terminal_nodes = [terminals[k] for k in range(1, terminals['Terminals'] + 1)]
+    for terminal in terminal_nodes:
+        graph_nodes[terminal] = 1
+    graph = Graph(graph['Nodes'], graph['Edges'],
+                  graph_nodes,
+                  {k: graph[k] for k in range(1, graph['Edges'] + 1)}
+                  )
+    mst = Kruskal.kruskal_algorithm(graph)
+    print("Kruskal Weight: ", mst[1])
+    steiner_tree = SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
+    print("Steiner Weight: ", steiner_tree[1])
+
+
+def test_steiner_tree_algorithm_on_all_stp_files():
+    path = "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs"
+    files = [join(path, f) for f in listdir(path) if isfile(join(path, f))]
+    for file in files:
+        print(file[69:])
+        test_steiner_tree_algorithm_on_stp_file(file)
+        print()
 
 
 # test_minheap_down_heapify()
@@ -116,4 +146,6 @@ def test_steiner_tree_algorithm():
 # test_file_data_to_graph()
 # test_kruskal()
 # test_kruskal_on_stp_file()
-test_steiner_tree_algorithm()
+# test_steiner_tree_algorithm()
+# test_steiner_tree_algorithm_on_stp_file()
+test_steiner_tree_algorithm_on_all_stp_files()

@@ -26,7 +26,7 @@ class SteinerTreeBasedOnKruskal:
 
             last_deleted_edge = edge_num
             # Checking if the remaining node is a leaf and terminal
-            while graph.nodes[second_node][2] == 0 and len(graph.nodes[second_node][1]):
+            while graph.nodes[second_node][2] == 0 and len(graph.nodes[second_node][1]) == 2:
                 node_num = second_node
                 node_edges = graph.nodes[second_node][1]
                 edge_num = node_edges[0] if node_edges[1] == last_deleted_edge else node_edges[1]
@@ -49,8 +49,9 @@ class SteinerTreeBasedOnKruskal:
                 edge_number += 1
 
         steiner_tree = Graph(len(new_graph_nodes), len(new_graph_edges), new_graph_nodes, new_graph_edges)
-        print(steiner_tree.nodes)
-        print(steiner_tree.edges)
-        print(steiner_tree.sort_edges())
+        # print(steiner_tree.nodes)
+        # print(steiner_tree.edges)
+        # print(steiner_tree.sort_edges())
+        # print(steiner_tree.graph_weight())
 
         return steiner_tree, steiner_tree.graph_weight()
