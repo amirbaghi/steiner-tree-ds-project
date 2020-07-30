@@ -110,7 +110,8 @@ def test_steiner_tree_algorithm():
                   {1: [1, 2, 19], 2: [2, 3, 19], 3: [3, 1, 19], 4: [1, 4, 10], 5: [2, 4, 10], 6: [3, 4, 10]})
     mst = Kruskal.kruskal_algorithm(graph)
     print(mst[1])
-    SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
+    steiner_tree = SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
+    print(steiner_tree[0].edges)
 
 
 def test_steiner_tree_algorithm_on_stp_file(path):
@@ -125,18 +126,33 @@ def test_steiner_tree_algorithm_on_stp_file(path):
                   {k: graph[k] for k in range(1, graph['Edges'] + 1)}
                   )
     mst = Kruskal.kruskal_algorithm(graph)
-    print("Kruskal Weight: ", mst[1])
+    # print("Kruskal Weight: ", mst[1])
     steiner_tree = SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
-    print("Steiner Weight: ", steiner_tree[1])
+    # print("Steiner Weight: ", steiner_tree[1])
+    return steiner_tree[0], steiner_tree[1]
 
 
 def test_steiner_tree_algorithm_on_all_stp_files():
     path = "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs"
     files = [join(path, f) for f in listdir(path) if isfile(join(path, f))]
     for file in files:
-        print(file[69:])
+        print(file[70:-4])
         test_steiner_tree_algorithm_on_stp_file(file)
         print()
+
+
+def test_writing_output():
+    steiner_tree = test_steiner_tree_algorithm_on_stp_file(
+        "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs/bip42p.stp")
+    FileHandler.write_output("bip42p", steiner_tree[1], steiner_tree[0].edges)
+
+
+def test_writing_output_for_all_inputs():
+    path = "/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs"
+    files = [join(path, f) for f in listdir(path) if isfile(join(path, f))]
+    for file in files:
+        steiner_tree = test_steiner_tree_algorithm_on_stp_file(file)
+        FileHandler.write_output(file[70:-4], steiner_tree[1], steiner_tree[0].edges)
 
 
 # test_minheap_down_heapify()
@@ -148,4 +164,6 @@ def test_steiner_tree_algorithm_on_all_stp_files():
 # test_kruskal_on_stp_file()
 # test_steiner_tree_algorithm()
 # test_steiner_tree_algorithm_on_stp_file()
-test_steiner_tree_algorithm_on_all_stp_files()
+# test_steiner_tree_algorithm_on_all_stp_files()
+# test_writing_output()
+test_writing_output_for_all_inputs()

@@ -1,4 +1,5 @@
 import re
+from os.path import join
 
 
 class FileHandler:
@@ -60,3 +61,25 @@ class FileHandler:
         f.close()
 
         return comment, graph, terminals
+
+    # Method to write an output for a file, gets the file name, the cost,
+    # and the graph edges as inputs and writes into a file
+    # in the outputs directory, with the name being filename.out
+    @staticmethod
+    def write_output(filename, cost, edges):
+        # Include your own directory here as the outputs dir
+        path = join("/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/outputs",
+                    "".join([filename, '.out']))
+        file = open(path, "w")
+
+        # Writing out the Cost
+        file.write(f"Cost {cost}")
+
+        # Writing out the number of the edges
+        file.write(f"\nEdges {len(edges)}")
+
+        # Writing out the edges, with the nodes and the weight
+        for edge in list(edges.values()):
+            file.write(f"\nE {edge[0]} {edge[1]} {edge[2]}")
+
+        file.close()
