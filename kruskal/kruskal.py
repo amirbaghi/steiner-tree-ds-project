@@ -21,8 +21,8 @@ class Kruskal:
             # The nodes were in different sets and union was successful, update the graph
             if result == 1:
                 # Adding the nodes to the MST, also setting their terminal status
-                mst_nodes[first_node] = graph.nodes[first_node][1]
-                mst_nodes[second_node] = graph.nodes[second_node][1]
+                mst_nodes[first_node] = graph.nodes[first_node][2]
+                mst_nodes[second_node] = graph.nodes[second_node][2]
 
                 # Adding the edge to the MST
                 mst_edges[edge_number] = [first_node, second_node, weight]
