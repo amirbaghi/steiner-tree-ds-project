@@ -57,24 +57,19 @@ class Graph:
         for i in list(self.nodes.keys()):
             turtle.forward(400)
             turtle.dot(14 if self.nodes[i][2] == 1 else 5)
-            # turtle.write(i)
             coordinates[i] = turtle.pos()
             turtle.back(400)
             turtle.right(degree)
 
-        print(coordinates)
-
-        weights = [edge[2] for edge in list(self.edges.values())]
-
-        rando = {}
-        for weight in weights:
-            rando[weight] = random.randint(0, 255)
+        randomized = {}
+        for edge in list(self.edges.values()):
+            randomized[edge[2]] = random.randint(0, 255)
 
         turtle.colormode(255)
         for edge in list(self.edges.values()):
-            Red = rando[edge[2]] % 4
-            Grn = (rando[edge[2]] // 4) % 4
-            Blu = (rando[edge[2]] // 16) % 4
+            Red = randomized[edge[2]] % 4
+            Grn = (randomized[edge[2]] // 4) % 4
+            Blu = (randomized[edge[2]] // 16) % 4
             turtle.goto(coordinates[edge[0]])
             turtle.pendown()
             turtle.pensize(3)
