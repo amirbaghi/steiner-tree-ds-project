@@ -100,17 +100,33 @@ def test_kruskal_on_stp_file():
 
 
 def test_steiner_tree_algorithm():
-    terminals = [1, 2, 3]
-    nodes = [i for i in range(1, 5)]
+    test = [[1, 2, 8],
+        [1, 0, 7],
+        [1, 3, 9],
+        [1, 4, 7],
+        [0, 3, 5],
+        [2, 4, 5],
+        [3, 4, 15],
+        [3, 5, 6],
+        [4, 5, 8],
+        [4, 6, 9],
+        [5, 6, 11]]
+    edges = {}
+    for i in range(len(test)):
+        edges[i + 1] = test[i]
+
+    terminals = [0, 2, 3]
+    nodes = [i for i in range(1, 8)]
     graph_nodes = {k: 0 for k in nodes}
     for terminal in terminals:
         graph_nodes[terminal] = 1
-    graph = Graph(4, 6, graph_nodes,
-                  {1: [1, 2, 19], 2: [2, 3, 19], 3: [3, 1, 19], 4: [1, 4, 10], 5: [2, 4, 10], 6: [3, 4, 10]})
+    graph = Graph(7, len(edges), graph_nodes,
+                  edges)
     mst = Kruskal.kruskal_algorithm(graph)
     print(mst[1])
     steiner_tree = SteinerTreeBasedOnKruskal.steiner_tree(mst[0])
     print(steiner_tree[0].edges)
+    print(steiner_tree[1])
 
 
 def test_steiner_tree_algorithm_on_stp_file(path):
@@ -153,6 +169,10 @@ def test_writing_output_for_all_inputs():
         FileHandler.write_output(file[70:-4], steiner_tree[1], steiner_tree[0].edges)
 
 
+def testing_draw():
+    s = test_steiner_tree_algorithm_on_stp_file("/home/amir/Desktop/dev/steiner-tree-ds/steiner-tree-ds-project/inputs/bip52u.stp")
+    s[0].draw()
+
 # test_minheap_down_heapify()
 # test_union_find()
 # read_file_test()
@@ -164,4 +184,5 @@ def test_writing_output_for_all_inputs():
 # test_steiner_tree_algorithm_on_stp_file()
 # test_steiner_tree_algorithm_on_all_stp_files()
 # test_writing_output()
-test_writing_output_for_all_inputs()
+# test_writing_output_for_all_inputs()
+testing_draw()

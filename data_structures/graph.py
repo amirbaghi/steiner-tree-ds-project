@@ -1,4 +1,6 @@
 # Graph Class
+import random
+import turtle
 from functools import reduce
 
 from data_structures.minheap import MinHeap
@@ -42,3 +44,42 @@ class Graph:
     def find_non_terminal_leaves(self):
         leaves = [(k, v[1]) for k, v in self.nodes.items() if v[0] == 1 and v[2] != 1]
         return leaves
+
+    def draw(self):
+        s = turtle.getscreen()
+        turtle.hideturtle()
+        turtle.speed(0)
+        turtle.shape(None)
+        # lucky = turtle.getturtle()
+        degree = 360 / len(self.nodes)
+        coordinates = {}
+        turtle.penup()
+        for i in list(self.nodes.keys()):
+            turtle.forward(400)
+            turtle.dot(14 if self.nodes[i][2] == 1 else 5)
+            # turtle.write(i)
+            coordinates[i] = turtle.pos()
+            turtle.back(400)
+            turtle.right(degree)
+
+        print(coordinates)
+
+        weights = [edge[2] for edge in list(self.edges.values())]
+
+        rando = {}
+        for weight in weights:
+            rando[weight] = random.randint(0, 255)
+
+        turtle.colormode(255)
+        for edge in list(self.edges.values()):
+            Red = rando[edge[2]] % 4
+            Grn = (rando[edge[2]] // 4) % 4
+            Blu = (rando[edge[2]] // 16) % 4
+            turtle.goto(coordinates[edge[0]])
+            turtle.pendown()
+            turtle.pensize(3)
+            turtle.pencolor((Red * 50, Grn % 50, Blu * 50))
+            turtle.goto(coordinates[edge[1]])
+            turtle.penup()
+
+        turtle.mainloop()
