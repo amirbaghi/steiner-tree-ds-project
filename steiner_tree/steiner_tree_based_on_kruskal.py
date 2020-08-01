@@ -25,8 +25,8 @@ class SteinerTreeBasedOnKruskal:
             new_nodes[node_num] = []
 
             # Update the second node
-            # graph.nodes[second_node][0] -= 1
-            # graph.nodes[second_node][1].pop(node_num)
+            graph.nodes[second_node][0] -= 1
+            graph.nodes[second_node][1].pop(node_num)
 
             # last_deleted_edge = edge_num
             # Checking if the remaining node is a leaf and not a terminal
