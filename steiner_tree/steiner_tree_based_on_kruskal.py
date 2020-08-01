@@ -16,7 +16,7 @@ class SteinerTreeBasedOnKruskal:
         # For all non-terminal leaves in the MST
         for leaf in leaf_nodes:
             node_num = leaf[0]
-            edge_num = leaf[1][0]
+            edge_num = list(leaf[1].values())[0]
             leaf_edge = graph.edges[edge_num]
             # Second node connected to the edge
             second_node = leaf_edge[0] if leaf_edge[1] == node_num else leaf_edge[1]
@@ -24,12 +24,16 @@ class SteinerTreeBasedOnKruskal:
             new_edges[edge_num] = []
             new_nodes[node_num] = []
 
-            last_deleted_edge = edge_num
+            # Update the second node
+            # graph.nodes[second_node][0] -= 1
+            # graph.nodes[second_node][1].pop(node_num)
+
+            # last_deleted_edge = edge_num
             # Checking if the remaining node is a leaf and not a terminal
-            while graph.nodes[second_node][2] == 0 and len(graph.nodes[second_node][1]) == 2:
+            while graph.nodes[second_node][2] == 0 and graph.nodes[second_node][0] == 1:
                 node_num = second_node
                 node_edges = graph.nodes[second_node][1]
-                edge_num = node_edges[0] if node_edges[1] == last_deleted_edge else node_edges[1]
+                edge_num = list(node_edges.values())[0]
                 leaf_edge = graph.edges[edge_num]
 
                 second_node = leaf_edge[0] if leaf_edge[1] == node_num else leaf_edge[1]
@@ -37,7 +41,9 @@ class SteinerTreeBasedOnKruskal:
                 new_edges[edge_num] = []
                 new_nodes[node_num] = []
 
-                last_deleted_edge = edge_num
+                graph.nodes[second_node][0] -= 1
+                graph.nodes[second_node][1].pop(node_num)
+                # last_deleted_edge = edge_num
 
         # Making new dictionaries of the updated nodes and edges to make a graph from them
         new_graph_nodes = {k: v[2] for k, v in new_nodes.items() if v != []}

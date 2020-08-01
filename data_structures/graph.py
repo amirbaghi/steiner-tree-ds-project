@@ -14,12 +14,15 @@ class Graph:
         # Edges are a list, with indexes 0, 1, and 2 being first and second node and the weight respectively
         self.edges = edges
         # Finding the Degree and the edges of each node
-        node_degrees = {k: [0, []] for k in list(nodes.keys())}
+        node_degrees = {k: [0, {}] for k in list(nodes.keys())}
         for i, edge in enumerate(list(self.edges.values())):
             node_degrees[edge[0]][0] += 1
-            node_degrees[edge[0]][1].append(i + 1)
+            # node_degrees[edge[0]][1].append(i + 1)
+            node_degrees[edge[0]][1][edge[1]] = i + 1
             node_degrees[edge[1]][0] += 1
-            node_degrees[edge[1]][1].append(i + 1)
+            # node_degrees[edge[1]][1].append(i + 1)
+            node_degrees[edge[1]][1][edge[0]] = i + 1
+
 
         # A dictionary with keys being the node number and the values being a list including the node degree (index 0),
         # the edges (index 1), and 1 if it's terminal or 0 if it's not (index 2)
