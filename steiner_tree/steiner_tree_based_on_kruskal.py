@@ -20,15 +20,14 @@ class SteinerTreeBasedOnKruskal:
             leaf_edge = graph.edges[edge_num]
             # Second node connected to the edge
             second_node = leaf_edge[0] if leaf_edge[1] == node_num else leaf_edge[1]
-            # Setting the value of the chosen edge and node to [] (as if we have delete it)
+            # Setting the value of the chosen edge and node to [] (as if we have deleted it)
             new_edges[edge_num] = []
             new_nodes[node_num] = []
 
-            # Update the second node
+            # Update the second node's degree and edges dictionary
             graph.nodes[second_node][0] -= 1
             graph.nodes[second_node][1].pop(node_num)
 
-            # last_deleted_edge = edge_num
             # Checking if the remaining node is a leaf and not a terminal
             while graph.nodes[second_node][2] == 0 and graph.nodes[second_node][0] == 1:
                 node_num = second_node
@@ -43,7 +42,6 @@ class SteinerTreeBasedOnKruskal:
 
                 graph.nodes[second_node][0] -= 1
                 graph.nodes[second_node][1].pop(node_num)
-                # last_deleted_edge = edge_num
 
         # Making new dictionaries of the updated nodes and edges to make a graph from them
         new_graph_nodes = {k: v[2] for k, v in new_nodes.items() if v != []}

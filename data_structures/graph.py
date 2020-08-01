@@ -17,15 +17,13 @@ class Graph:
         node_degrees = {k: [0, {}] for k in list(nodes.keys())}
         for i, edge in enumerate(list(self.edges.values())):
             node_degrees[edge[0]][0] += 1
-            # node_degrees[edge[0]][1].append(i + 1)
             node_degrees[edge[0]][1][edge[1]] = i + 1
             node_degrees[edge[1]][0] += 1
-            # node_degrees[edge[1]][1].append(i + 1)
             node_degrees[edge[1]][1][edge[0]] = i + 1
 
-
         # A dictionary with keys being the node number and the values being a list including the node degree (index 0),
-        # the edges (index 1), and 1 if it's terminal or 0 if it's not (index 2)
+        # the nodes that this node is connected to, with the edge number (index 1),
+        # and 1 if it's terminal or 0 if it's not (index 2)
         self.nodes = {k: [node_degrees[k][0], node_degrees[k][1], nodes[k]] for k in list(nodes.keys())}
 
     # Sorting edges using Heap-Sort, returns a list consisting of a key (edge index) and value (its weight)
@@ -53,7 +51,6 @@ class Graph:
         turtle.hideturtle()
         turtle.speed(0)
         turtle.shape(None)
-        # lucky = turtle.getturtle()
         degree = 360 / len(self.nodes)
         coordinates = {}
         turtle.penup()
